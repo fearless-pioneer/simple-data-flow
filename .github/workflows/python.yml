@@ -17,6 +17,6 @@ jobs:
 
       - name: Initialize packages
         run: make init
-      
+
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
