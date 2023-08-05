@@ -1,9 +1,12 @@
 [project]
-name = "python-template"
+name = "simple-data-flow"
 version = "0.0.0"
-description = "A python template"
+description = "Simple Data Flow"
 authors = [
     {name = "dongminlee94", email = "kid33629@gmail.com"},
+    {name = "Kimdongui", email = "rkdqus2006@gmail.com"},
+    {name = "Haeun-Oh", email = "oha2451@gmail.com"},
+    {name = "taeukkkim", email = "ktu9682@gmail.com"},
 ]
 readme = "README.md"
 
