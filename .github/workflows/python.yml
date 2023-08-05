@@ -7,13 +7,16 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
+      - name: Checkout base branch
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Initial setup
-        shell: bash -l {0}
+
+      - name: Initialize packages
         run: make init
-      - uses: pre-commit/action@v3.0.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
