@@ -18,3 +18,12 @@ format:
 lint:
 	pdm run mypy src
 	pdm run ruff src --fix
+
+######################
+#   docker compose   #
+######################
+elk:
+	docker compose -p elk -f docker-compose-elk.yaml up -d
+
+elk-clean:
+	docker compose -p elk down -v
