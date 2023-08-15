@@ -23,7 +23,7 @@ lint:
 #   docker compose   #
 ######################
 elk:
-	docker compose -p elk -f docker-compose-elk.yaml up -d
+	docker compose -p elk -f docker-compose-elk.yml up -d
 
 elk-clean:
 	docker compose -p elk down -v
