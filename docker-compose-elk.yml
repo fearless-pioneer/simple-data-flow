@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.10
+    container_name: elasticsearch
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: search
+    ports:
+      - 9200:9200
+    volumes:
+      - type: bind
+        source: ./docker/elk/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+
+  kibana:
+    image: kibana:7.17.10
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+    volumes:
+      - type: bind
+        source: ./docker/elk/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
