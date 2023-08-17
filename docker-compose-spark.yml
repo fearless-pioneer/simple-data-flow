@@ -1,0 +1,41 @@
+version: '3'
+services:
+  spark-master:
+    image: bde2020/spark-master:3.3.0-hadoop3.3 #apache/spark-py:v3.4.0
+    container_name: spark-master
+    ports:
+      - 8080:8080
+      - 7077:7077
+    environment:
+      - INIT_DAEMON_STEP=setup_spark
+      - SPARK_MASTER_PORT=7077
+      - SPARK_MASTER_WEBUI_PORT=8080
+    networks:
+      - spark-network
+
+  spark-worker:
+    image: bde2020/spark-master:3.3.0-hadoop3.3 # apache/spark-py:v3.4.0
+    container_name: spark-worker
+    ports:
+      - 8081:8081
+      - 8881:8881
+    environment:
+      - SPARK_WORKER_PORT=8881
+      - SPARK_WORKER_WEBUI_PORT=8081
+      - SPARK_MASTER=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    networks:
+      - spark-network
+
+  delta-lake:
+    image: deltaio/delta-docker:0.8.1_2.3.0_arm64
+    container_name: delta-lake
+    ports:
+      - 9000:9000
+    networks:
+      - spark-network
+
+networks:
+  spark-network:
+    driver: bridge
