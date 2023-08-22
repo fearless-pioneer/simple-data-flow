@@ -27,11 +27,15 @@ spark:
 
 spark-clean:
 	docker compose -p spark down -v
+
 delta-lake:
+	bash docker-compose-delta-lake.sh
 	docker compose -p delta-lake -f docker-compose-delta-lake.yml up -d
 
 delta-lake-clean:
 	docker compose -p delta-lake down -v
+	rm -rf docker-compose-delta-lake.yml 
+	
 elk:
 	docker compose -p elk -f docker-compose-elk.yml up -d
 
