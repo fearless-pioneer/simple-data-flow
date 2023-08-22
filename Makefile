@@ -22,8 +22,18 @@ lint:
 ######################
 #   docker compose   #
 ######################
+spark:
+	docker compose -p spark -f docker-compose-spark.yml up -d
+
+spark-clean:
+	docker compose -p spark down -v
 delta-lake:
-	docker compose -p delta -f docker-compose-spark-delta-lake.yml up -d
+	docker compose -p delta-lake -f docker-compose-delta-lake.yml up -d
 
 delta-lake-clean:
-	docker compose -p delta down -v
+	docker compose -p delta-lake down -v
+elk:
+	docker compose -p elk -f docker-compose-elk.yml up -d
+
+elk-clean:
+	docker compose -p elk down -v
