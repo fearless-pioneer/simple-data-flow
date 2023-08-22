@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  delta-lake:
+    image: deltaio/delta-docker:0.8.1_2.3.0_arm64
+    container_name: delta-lake
+    ports:
+      - 9000:9000
+    command: ["--s3", "s3a://delta-lake"]
+    environment:
+      - DELTA_LAKE_STORAGE_S3A_ACCESS_KEY=minioaccesskey
+      - DELTA_LAKE_STORAGE_S3A_SECRET_KEY=miniosecretkey
+      - DELTA_LAKE_STORAGE_S3A_ENDPOINT=http://minio:9000  # Use the Minio container name
+      - DELTA_LAKE_STORAGE_S3A_PATH=s3a://delta-lake
+
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - 9000:9000
+    environment:
+      - MINIO_ACCESS_KEY=minioaccesskey
+      - MINIO_SECRET_KEY=miniosecretkey
+    command: server /data
