@@ -8,10 +8,8 @@ services:
       - 8080:8080
       - 7077:7077
     environment:
-      - INIT_DAEMON_STEP=setup_spark
       - SPARK_MASTER_PORT=7077
       - SPARK_MASTER_WEBUI_PORT=8080
-      - SPARK_MASTER_LOG=/spark/logs
 
   spark-worker-1:
     image: apache/spark:3.4.1-scala2.12-java11-python3-r-ubuntu
@@ -19,8 +17,6 @@ services:
     environment:
       - SPARK_WORKER_PORT=8881
       - SPARK_WORKER_WEBUI_PORT=8081
-      - SPARK_WORKER_LOG=/spark/logs
-      - SPARK_MASTER_URL=spark://spark-master:7077
     ports:
       - 8081:8081
     depends_on:
@@ -32,8 +28,6 @@ services:
     environment:
       - SPARK_WORKER_PORT=8881
       - SPARK_WORKER_WEBUI_PORT=8081
-      - SPARK_WORKER_LOG=/spark/logs
-      - SPARK_MASTER_URL=spark://spark-master:7077
     ports:
       - 8082:8081
     depends_on:
@@ -45,8 +39,6 @@ services:
     environment:
       - SPARK_WORKER_PORT=8881
       - SPARK_WORKER_WEBUI_PORT=8081
-      - SPARK_WORKER_LOG=/spark/logs
-      - SPARK_MASTER_URL=spark://spark-master:7077
     ports:
       - 8083:8081
     depends_on:
@@ -58,8 +50,6 @@ services:
     ports:
       - 18080:18080
     command: ["history-server"]
-    environment:
-      - SPARK_HISTORY_OPTS="-Dspark.history.fs.logDirectory=/var/log/spark/event-logs"
     depends_on:
       - spark-master
 
@@ -68,8 +58,6 @@ services:
     container_name: jupyterlab
     ports:
       - 8888:8888
-    environment:
-      - SPARK_MASTER_URL=spark://spark-master:7077
     depends_on:
       - spark-master
 
