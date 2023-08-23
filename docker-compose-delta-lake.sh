@@ -15,7 +15,7 @@ fi
 
 # Generate the docker-compose-delta-lake.yml file with the selected base image
 cat <<EOF > docker-compose-delta-lake.yml
-version: '3'
+version: '3.8'
 
 services:
   delta-lake:
