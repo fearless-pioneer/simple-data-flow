@@ -35,7 +35,7 @@ delta-lake:
 delta-lake-clean:
 	docker compose -p delta-lake down -v
 	rm -rf docker-compose-delta-lake.yml
-	
+
 elk:
 	docker compose -p elk -f docker-compose-elk.yml up -d
 
