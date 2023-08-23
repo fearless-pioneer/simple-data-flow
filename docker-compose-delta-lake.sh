@@ -21,21 +21,24 @@ services:
   delta-lake:
     image: $BASE_IMAGE
     container_name: delta-lake
-    ports:
-      - 9000:9000
-    command: ["--s3", "s3a://delta-lake"]
+    command: ["--s3", "s3://delta-lake"]
     environment:
-      - DELTA_LAKE_STORAGE_S3A_ACCESS_KEY=minioaccesskey
-      - DELTA_LAKE_STORAGE_S3A_SECRET_KEY=miniosecretkey
-      - DELTA_LAKE_STORAGE_S3A_ENDPOINT=http://minio:9000  # Use the Minio container name
-      - DELTA_LAKE_STORAGE_S3A_PATH=s3a://delta-lake
+      - DELTA_LAKE_STORAGE_S3_ACCESS_KEY=minio
+      - DELTA_LAKE_STORAGE_S3_SECRET_KEY=minio123
+      - DELTA_LAKE_STORAGE_S3_ENDPOINT=http://minio:9000
+      - DELTA_LAKE_STORAGE_S3_PATH=s3://delta-lake
 
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2021-04-22T15-44-28Z
     container_name: minio
-    ports:
-      - 9000:9000
+    command: server /data/minio
     environment:
-      - MINIO_ACCESS_KEY=minioaccesskey
-      - MINIO_SECRET_KEY=miniosecretkey
-    command: server /data
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports:
+      - 9900:9000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
