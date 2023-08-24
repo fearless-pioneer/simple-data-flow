@@ -42,3 +42,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
+networks:
+  default:
+    name: simple-data-flow
+
+EOF
