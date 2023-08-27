@@ -46,5 +46,4 @@ services:
 networks:
   default:
     name: simple-data-flow
-
 EOF
