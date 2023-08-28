@@ -13,8 +13,8 @@ else
   exit 1
 fi
 
-# Generate the docker-compose-delta-lake.yml file with the selected base image
-cat <<EOF > docker-compose-delta-lake.yml
+# Generate the docker-compose-delta.yml file with the selected base image
+cat <<EOF > docker-compose-delta.yml
 version: '3.8'
 
 services:
