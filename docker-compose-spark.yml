@@ -68,7 +68,7 @@ services:
       - 18080:18080
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer
     volumes:
-      - ~/spark-logs:/tmp/spark-events
+      - ./logs/spark-history:/tmp/spark-events
 
 networks:
   default:
