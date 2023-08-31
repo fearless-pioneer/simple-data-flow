@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  jupyterlab:
+    image: jupyter/all-spark-notebook
+    container_name: jupyter
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - SPYLON_KERNEL_DISPLAY_NAME="Scala (Spark)"
+    ports:
+      - 8889:8889
+    restart: always
+
+networks:
+  default:
+    name: simple-data-flow

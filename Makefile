@@ -41,3 +41,10 @@ elk:
 
 elk-clean:
 	docker compose -p elk down -v
+
+jupyter:
+	docker compose -p jupyter -f docker-compose-jupyter.yml up -d
+	docker exec -it jupyter /bin/bash
+
+jupyter-clean:
+	docker compose -p jupyter down -v
