@@ -8,8 +8,17 @@ services:
       - JUPYTER_ENABLE_LAB=yes
       - SPYLON_KERNEL_DISPLAY_NAME="Scala (Spark)"
     ports:
-      - 8889:8889
-    restart: always
+      - 8889:8888
+    command:
+    - sh
+    - -c
+    - |
+      pip install spylon-kernel &&
+      python -m spylon_kernel install --user
+      jupyter lab --NotebookApp.token=''
+
+    tty: true
+    stdin_open: true
 
 networks:
   default:

@@ -44,7 +44,6 @@ elk-clean:
 
 jupyter:
 	docker compose -p jupyter -f docker-compose-jupyter.yml up -d
-	docker exec -it jupyter /bin/bash
 
 jupyter-clean:
 	docker compose -p jupyter down -v
