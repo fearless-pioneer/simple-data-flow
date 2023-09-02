@@ -21,7 +21,6 @@ services:
   delta-lake:
     image: $BASE_IMAGE
     container_name: delta-lake
-    command: ["--s3", "s3://delta-lake"]
     environment:
       - DELTA_LAKE_STORAGE_S3_ACCESS_KEY=minio
       - DELTA_LAKE_STORAGE_S3_SECRET_KEY=minio123
@@ -29,16 +28,17 @@ services:
       - DELTA_LAKE_STORAGE_S3_PATH=s3://delta-lake
     ports:
       - 9001:9000
+    command: ["--s3", "s3://delta-lake"]
 
   minio:
     image: minio/minio:RELEASE.2021-04-22T15-44-28Z
     container_name: minio
-    command: server /data/minio
     environment:
       MINIO_ROOT_USER: minio
       MINIO_ROOT_PASSWORD: minio123
     ports:
       - 9900:9000
+    command: server /data/minio
     healthcheck:
       test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
       interval: 10s
