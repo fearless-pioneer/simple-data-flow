@@ -13,8 +13,10 @@ services:
     - sh
     - -c
     - |
-      pip install spylon-kernel &&
-      python -m spylon_kernel install --user
+      pip install ipywidgets ipykernel metakernel py4j pandas && 
+      pip install "IPython<8.0.0" && 
+      pip install pyspark_kernel && 
+      python -m pyspark_kernel.installl --user
       jupyter lab --NotebookApp.token=''
 
     tty: true
