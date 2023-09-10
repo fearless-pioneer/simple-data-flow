@@ -11,6 +11,7 @@ services:
       - 9900:9000
     volumes:
       - ./data:/data
+      - ./logs:/opt/spark/logs
     command: server /data
 
   spark-master:
@@ -25,6 +26,7 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
     volumes:
       - ./data:/opt/spark/data
+      - ./logs:/opt/spark/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://spark-master:8080/"]
       interval: 10s
@@ -48,6 +50,7 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
       - ./data:/opt/spark/data
+      - ./logs:/opt/spark/logs
 
   spark-worker-2:
     image: apache/spark:3.4.0-python3
@@ -66,6 +69,7 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
       - ./data:/opt/spark/data
+      - ./logs:/opt/spark/logs
 
   spark-worker-3:
     image: apache/spark:3.4.0-python3
@@ -84,6 +88,7 @@ services:
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
       - ./data:/opt/spark/data
+      - ./logs:/opt/spark/logs
 
   spark-history-server:
     image: apache/spark:3.4.0-python3
