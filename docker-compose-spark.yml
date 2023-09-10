@@ -10,7 +10,7 @@ services:
     ports:
       - 9900:9000
     volumes:
-      - minio-data:/data
+      - ./data:/data
     command: server /data
 
   spark-master:
@@ -24,7 +24,7 @@ services:
       - 7077:7077
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
     volumes:
-      - minio-data:/data
+      - ./data:/opt/spark/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://spark-master:8080/"]
       interval: 10s
@@ -47,7 +47,7 @@ services:
       - 8081:8081
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
-      - minio-data:/data
+      - ./data:/opt/spark/data
 
   spark-worker-2:
     image: apache/spark:3.4.0-python3
@@ -65,7 +65,7 @@ services:
       - 8082:8081
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
-      - minio-data:/data
+      - ./data:/opt/spark/data
 
   spark-worker-3:
     image: apache/spark:3.4.0-python3
@@ -83,7 +83,7 @@ services:
       - 8083:8081
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     volumes:
-      - minio-data:/data
+      - ./data:/opt/spark/data
 
   spark-history-server:
     image: apache/spark:3.4.0-python3
@@ -92,16 +92,12 @@ services:
       spark-master:
         condition: service_healthy
     environment:
-      - SPARK_HISTORY_FS_LOGDIRECTORY=/tmp/spark-events
+      - SPARK_HISTORY_FS_LOGDIRECTORY=/opt/spark/logs
     ports:
       - 18080:18080
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer
     volumes:
-      - ./logs/spark-history:/tmp/spark-events
-
-volumes:
-  minio-data:
-    driver: local
+      - ./logs:/opt/spark/logs
 
 networks:
   default:
