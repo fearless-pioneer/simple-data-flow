@@ -37,6 +37,8 @@ spark:
 
 spark-clean:
 	docker compose -p spark down -v
+	rm -rf ./data
+	rm -rf ./logs
 
 delta:
 	sh docker-compose-delta.sh

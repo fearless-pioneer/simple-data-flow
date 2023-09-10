@@ -92,12 +92,12 @@ services:
       spark-master:
         condition: service_healthy
     environment:
-      - SPARK_HISTORY_FS_LOGDIRECTORY=/opt/spark/logs
+      - SPARK_HISTORY_FS_LOGDIRECTORY=/tmp/spark-events
     ports:
       - 18080:18080
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer
     volumes:
-      - ./logs:/opt/spark/logs
+      - ./logs:/tmp/spark-events
 
 networks:
   default:
