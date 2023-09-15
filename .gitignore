@@ -159,7 +159,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+.ipython/
+.jupyter/
+.local/
+.bash_history
 data/
-logs/
-minio/
-.pdm-python
+*.ipynb

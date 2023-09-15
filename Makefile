@@ -30,11 +30,12 @@ compose-clean:
 	make elk-clean
 	make spark-clean
 
-spark:
+spark-cluster:
 	docker compose -p spark -f docker-compose-spark.yml up -d
 
-spark-clean:
+spark-cluster-clean:
 	docker compose -p spark down -v
+	docker rmi spark-spark-master spark-spark-notebook
 
 elk:
 	docker compose -p elk -f docker-compose-elk.yml up -d
