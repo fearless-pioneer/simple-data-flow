@@ -24,12 +24,10 @@ lint:
 ######################
 compose:
 	make spark
-	make delta
 	make elk
 
 compose-clean:
 	make elk-clean
-	make delta-clean
 	make spark-clean
 
 spark:
@@ -37,14 +35,6 @@ spark:
 
 spark-clean:
 	docker compose -p spark down -v
-
-delta:
-	sh docker-compose-delta.sh
-	docker compose -p delta -f docker-compose-delta.yml up -d
-
-delta-clean:
-	docker compose -p delta down -v
-	rm -rf docker-compose-delta.yml
 
 elk:
 	docker compose -p elk -f docker-compose-elk.yml up -d
