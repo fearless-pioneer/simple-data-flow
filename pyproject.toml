@@ -39,7 +39,6 @@ select = [
     "F",  # pyflakes
     "I",  # isort
     "N",  # pep-naming
-    "D",  # pydocstyle
     "B",  # flakes-bugbear
     "ANN",# flakes-annotations
     "A",  # flakes-builtins

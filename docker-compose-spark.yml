@@ -45,7 +45,7 @@ services:
 
   spark-worker-3:
     image: bitnami/spark:3.3.3
-    container_name: worker-3
+    container_name: spark-worker-3
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark-master:7077
