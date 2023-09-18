@@ -10,7 +10,7 @@ services:
     ports:
       - 9201:9200
     volumes:
-      - ./src/elk/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./docker/elk/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     healthcheck:
       test: ["CMD", "curl", "-f", "http://elasticsearch:9200"]
       interval: 10s
@@ -30,8 +30,8 @@ services:
       - 5001:5000/udp
       - 9601:9600
     volumes:
-      - ./src/elk/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./src/elk/pipeline:/usr/share/logstash/pipeline
+      - ./docker/elk/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./docker/elk/pipeline:/usr/share/logstash/pipeline
       - ./logs:/usr/share/logstash/logs
 
   kibana:
@@ -43,7 +43,7 @@ services:
     ports:
       - 5601:5601
     volumes:
-      - ./src/elk/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./docker/elk/config/kibana.yml:/usr/share/kibana/config/kibana.yml
 
 networks:
   default:

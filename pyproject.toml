@@ -21,6 +21,7 @@ dev = [
     "mypy>=1.4.1",
     "ruff>=0.0.261",
     "pre-commit>=3.2.2",
+    "delta-spark==2.2.0",
 ]
 
 [build-system]
@@ -38,7 +39,6 @@ select = [
     "F",  # pyflakes
     "I",  # isort
     "N",  # pep-naming
-    "D",  # pydocstyle
     "B",  # flakes-bugbear
     "ANN",# flakes-annotations
     "A",  # flakes-builtins

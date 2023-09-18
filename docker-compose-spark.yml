@@ -1,74 +1,104 @@
-version: '3.8'
+version: "3.8"
 
 services:
   spark-master:
-    image: apache/spark:3.4.1-python3
+    build: ./docker/spark/master
     container_name: spark-master
     environment:
-      - SPARK_MASTER_PORT=7077
-      - SPARK_MASTER_WEBUI_PORT=8080
+      - SPARK_MODE=master
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
     ports:
-      - 8080:8080
-      - 7077:7077
-    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://spark-master:8080/"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - 7078:7077
+      - 8081:8080
+    volumes:
+      - ./docker/spark/spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
 
   spark-worker-1:
-    image: apache/spark:3.4.1-python3
+    image: bitnami/spark:3.3.3
     container_name: spark-worker-1
-    depends_on:
-      spark-master:
-        condition: service_healthy
     environment:
-      - SPARK_WORKER_PORT=8881
-      - SPARK_WORKER_WEBUI_PORT=8081
-    ports:
-      - 8081:8081
-    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
 
   spark-worker-2:
-    image: apache/spark:3.4.1-python3
+    image: bitnami/spark:3.3.3
     container_name: spark-worker-2
-    depends_on:
-      spark-master:
-        condition: service_healthy
     environment:
-      - SPARK_WORKER_PORT=8881
-      - SPARK_WORKER_WEBUI_PORT=8081
-    ports:
-      - 8082:8081
-    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
 
   spark-worker-3:
-    image: apache/spark:3.4.1-python3
+    image: bitnami/spark:3.3.3
     container_name: spark-worker-3
-    depends_on:
-      spark-master:
-        condition: service_healthy
     environment:
-      - SPARK_WORKER_PORT=8881
-      - SPARK_WORKER_WEBUI_PORT=8081
-    ports:
-      - 8083:8081
-    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=4G
+      - SPARK_WORKER_CORES=1
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
 
-  spark-history-server:
-    image: apache/spark:3.4.1-python3
-    container_name: spark-history-server
-    depends_on:
-      spark-master:
-        condition: service_healthy
+  spark-notebook:
+    build: ./docker/spark/notebook
+    container_name: spark-notebook
     environment:
-      - SPARK_HISTORY_FS_LOGDIRECTORY=/tmp/spark-events
+      - JUPYTER_ENABLE_LAB="yes"
+      - GRANT_SUDO="yes"
     ports:
-      - 18080:18080
-    command: /opt/spark/bin/spark-class org.apache.spark.deploy.history.HistoryServer
+      - 8880:8888
+      - 4040:4040
+    command: jupyter lab --NotebookApp.token='' --allow-root
     volumes:
-      - ./logs/spark-history:/tmp/spark-events
+      - ./src:/home/jovyan
+      - ./docker/spark/spark-defaults.conf:/usr/local/spark/conf/spark-defaults.conf
+
+  minio:
+    image: minio/minio:RELEASE.2023-09-07T02-05-02Z
+    container_name: minio
+    environment:
+      - MINIO_ROOT_USER=minio
+      - MINIO_ROOT_PASSWORD=minio123
+    ports:
+      - 9001:9000
+      - 9002:9001
+    command: ["server", "/data", "--console-address", ":9001"]
+    volumes:
+      - ./data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://minio:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  minio-client:
+    image: minio/mc:RELEASE.2023-09-07T22-48-55Z
+    container_name: minio-client
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        /usr/bin/mc config host add minio http://minio:9000 minio minio123 &&
+        /usr/bin/mc mb --ignore-existing minio/data
 
 networks:
   default:
