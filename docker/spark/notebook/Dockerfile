@@ -38,3 +38,7 @@ RUN pip install --no-cache-dir \
 
 COPY jupytext.toml /usr/share/jupytext/jupytext.toml
 COPY overrides.json /opt/conda/share/jupyter/lab/settings/overrides.json
+COPY startup.py /root/startup.py
+COPY spark_kernel /root/spark_kernel
+
+RUN jupyter kernelspec install /root/spark_kernel
