@@ -23,12 +23,12 @@ lint:
 #   docker compose   #
 ######################
 compose:
-	make spark
+	make spark-cluster
 	make elk
 
 compose-clean:
 	make elk-clean
-	make spark-clean
+	make spark-cluster-clean
 
 spark-cluster:
 	docker compose -p spark -f docker-compose-spark.yml up -d
