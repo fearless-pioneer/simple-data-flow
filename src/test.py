@@ -41,10 +41,10 @@ display(df_orders.limit(10).toPandas())
     df_orders.limit(10)
     .write.mode("overwrite")
     .option("compression", "snappy")
-    .option("path", "s3a://mydata/data.delta")
+    .option("path", "s3a://ecommerce/data.delta")
     .format("delta")
-    .partitionBy("event_time")
-    .saveAsTable('ecommerce_table')
+    .partitionBy("user_id")
+    .saveAsTable("ecommerce_table")
 )
 
 # %%
