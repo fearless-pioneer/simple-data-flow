@@ -50,3 +50,4 @@ if __name__ == "__main__":
         .partitionBy("user_id")
         .saveAsTable("ecommerce_table")
     )
+    
