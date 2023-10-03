@@ -2,6 +2,8 @@ import boto3
 import os
 import wget
 import gzip
+from delta import configure_spark_with_delta_pip
+from pyspark.sql import SparkSession
 
 MINIO_BUCKET = "data"
 MINIO_ENDPOINT = "http://minio:9000"
@@ -36,3 +38,15 @@ if __name__ == "__main__":
         
         os.remove(file_name)
         os.remove(csv_file_name)
+    
+    spark = configure_spark_with_delta_pip(SparkSession.builder).getOrCreate()
+    df_orders = spark.read.format("csv").load("s3a://data/", header=True)
+    (
+        df_orders.limit
+        .write.mode("overwrite")
+        .option("compression", "snappy")
+        .option("path", "s3a://ecommerce/data.delta")
+        .format("delta")
+        .partitionBy("user_id")
+        .saveAsTable("ecommerce_table")
+    )
