@@ -20,8 +20,9 @@ if __name__ == "__main__":
 
     for file_name in file_name_list:
         local_csv_file_path = os.path.join(root_file_path, file_name)
+        minio_file_path = os.path.join("raw", file_name)
         BOTO3_CLIENT.upload_file(
             local_csv_file_path,
             MINIO_BUCKET,
-            file_name,
+            minio_file_path,
         )
