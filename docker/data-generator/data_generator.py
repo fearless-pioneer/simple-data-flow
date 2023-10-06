@@ -16,10 +16,7 @@ BOTO3_CLIENT = boto3.client(
 
 if __name__ == "__main__":
     root_file_path = "./data"
-    file_name_list = [
-        "2019-Oct.csv",
-        "2019-Dec.csv"
-    ]
+    file_name_list = ["2019-Oct.csv", "2019-Dec.csv"]
 
     for file_name in file_name_list:
         local_csv_file_path = os.path.join(root_file_path, file_name)
