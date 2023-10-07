@@ -14,15 +14,18 @@ BOTO3_CLIENT = boto3.client(
 )
 
 
-if __name__ == "__main__":
+def main():
     root_file_path = "./data"
     file_name_list = ["2019-Oct.csv", "2019-Dec.csv"]
 
     for file_name in file_name_list:
         local_csv_file_path = os.path.join(root_file_path, file_name)
-        minio_file_path = os.path.join("raw", file_name)
+        minio_file_path = f"raw/{file_name}"
         BOTO3_CLIENT.upload_file(
             local_csv_file_path,
             MINIO_BUCKET,
             minio_file_path,
         )
+        
+if __name__ == "__main__":
+    main()
