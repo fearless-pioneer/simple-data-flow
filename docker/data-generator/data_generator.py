@@ -26,6 +26,7 @@ def main():
             MINIO_BUCKET,
             minio_file_path,
         )
-        
+
+
 if __name__ == "__main__":
     main()
