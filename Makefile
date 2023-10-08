@@ -19,26 +19,18 @@ lint:
 	pdm run mypy src
 	pdm run ruff src --fix
 
+##################
+#   data setup   #
+##################
+data:
+	sh data-setup.sh
+
 ######################
 #   docker compose   #
 ######################
-compose:
-	make spark-cluster
-	make elk
-
-compose-clean:
-	make elk-clean
-	make spark-cluster-clean
-
 spark-cluster:
-	docker compose -p spark -f docker-compose-spark.yml up -d
+	docker compose up -d
 
 spark-cluster-clean:
-	docker compose -p spark down -v
-	docker rmi spark-spark-master spark-spark-notebook
-
-elk:
-	docker compose -p elk -f docker-compose-elk.yml up -d
-
-elk-clean:
-	docker compose -p elk down -v
+	docker compose down -v
+	docker rmi simple-spark-flow-spark-master simple-spark-flow-spark-notebook simple-spark-flow-data-generator

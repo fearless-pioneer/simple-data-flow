@@ -13,9 +13,21 @@
 Install [Python 3.10](https://www.python.org/downloads/release/python-3100/) on [Pyenv](https://github.com/pyenv/pyenv#installation) or [Anaconda](https://docs.anaconda.com/anaconda/install/index.html) and execute the following commands:
 
 ```bash
-$ make init         # setup packages (need only once)
+$ make init         # set up packages (need only once)
 ```
 
-## TBD
-1. Download "2019-Oct.csv", "2019-Dec.csv" "from https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store".
-2. Save the downloaded data to "docker/data-generator/data".
+## Data Setup
+
+Run the following shell script to create the necessary data directory, download, and decompress the data.
+
+```shell
+$ make data         # set up data (need only once)
+```
+
+This script will create a data folder in the repository path, download the necessary files, and decompress them into CSV format. The download process may take around 10 minutes, but you only need to do this once initially.
+
+For more details on this data, please refer to [Kaggle - eCommerce behavior data from multi category store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store).
+
+## Spark Setup
+
+TBD
