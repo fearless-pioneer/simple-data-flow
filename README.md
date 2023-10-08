@@ -17,3 +17,5 @@ $ make init         # setup packages (need only once)
 ```
 
 ## TBD
+1. Download "2019-Oct.csv", "2019-Dec.csv" "from https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store".
+2. Save the downloaded data to "docker/data-generator/data".
