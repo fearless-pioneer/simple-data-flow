@@ -100,6 +100,16 @@ services:
         /usr/bin/mc config host add minio http://minio:9000 minio minio123 &&
         /usr/bin/mc mb --ignore-existing minio/data
 
+  data-generator:
+    build:
+      context: docker/data-generator
+      dockerfile: Dockerfile
+    container_name: data-generator
+    depends_on:
+      minio:
+        condition: service_healthy
+    command: python data_generator.py
+
 networks:
   default:
     name: simple-data-flow
