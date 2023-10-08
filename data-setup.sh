@@ -28,7 +28,7 @@ fi
 aria2c -Z \
 https://data.rees46.com/datasets/marketplace/2019-Oct.csv.gz \
 https://data.rees46.com/datasets/marketplace/2019-Dec.csv.gz \
--d ./docker/data-generator/data
+-d ./data
 
 # Decompress the data using gunzip
-gunzip ./docker/data-generator/data/*.gz
+gunzip ./data/*.gz
