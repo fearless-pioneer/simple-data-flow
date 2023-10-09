@@ -19,12 +19,6 @@ lint:
 	pdm run mypy src
 	pdm run ruff src --fix
 
-##################
-#   data setup   #
-##################
-data:
-	sh data-setup.sh
-
 ######################
 #   docker compose   #
 ######################
