@@ -2,7 +2,7 @@
 set -e
 
 # Create data directory
-mkdir -p docker/data-generator/data
+mkdir -p ./data
 
 # Function to install aria2
 install_aria2() {
