@@ -12,7 +12,10 @@ readme = "README.md"
 
 requires-python = ">=3.10,<3.11"
 
-dependencies = []
+dependencies = [
+    "delta-spark==2.2.0",
+    "boto3==1.28.57",
+]
 
 [tool.pdm]
 [tool.pdm.dev-dependencies]
@@ -21,7 +24,6 @@ dev = [
     "mypy>=1.4.1",
     "ruff>=0.0.261",
     "pre-commit>=3.2.2",
-    "delta-spark==2.2.0",
 ]
 
 [build-system]
