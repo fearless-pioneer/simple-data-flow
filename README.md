@@ -18,17 +18,11 @@ $ make init             # set up packages (need only once)
 
 ## Data Setup
 
-Run the following shell script to create the necessary data directory, download, and decompress the data.
+First, create a `data` folder in the current repository path.
 
-```shell
-$ sh data-setup.sh      # set up data (need only once)
-```
+Next, access the [eCommerce Events History in Cosmetics Shop](https://www.kaggle.com/datasets/mkechinov/ecommerce-events-history-in-cosmetics-shop) and download the entire dataset. This will result in a file named `archive.zip`.
 
-This script will create a data folder in the repository path, download the necessary files, and decompress them into CSV format. The download process may take between 10 to 30 minutes, but you only need to do this once initially.
-
-When running the script, network issues may arise causing the download to take more than 30 minutes. If this occurs, it's recommended to download the data manually by referring to the link below.
-
-For more details on this data, please refer to [Kaggle - eCommerce behavior data from multi category store](https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store).
+Lastly, unzip the zip file and move the five csv files from the `archive` folder to the `./data` directory.
 
 ## Spark Setup
 
