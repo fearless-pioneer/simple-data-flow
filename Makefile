@@ -27,4 +27,6 @@ spark-cluster:
 
 spark-cluster-clean:
 	docker compose down -v
-	docker rmi simple-spark-flow-spark-master simple-spark-flow-spark-notebook simple-spark-flow-data-generator
+	docker rmi \
+		simple-spark-flow-spark-master simple-spark-flow-spark-notebook \
+		simple-spark-flow-data-generator simple-spark-flow-spark-livy
