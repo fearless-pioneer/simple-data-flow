@@ -18,7 +18,7 @@ ENV SPARK_VERSION=3.3.3
 ENV SPARK_HOME=/usr/local/spark
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
     PATH="${PATH}:${SPARK_HOME}/bin"
-    
+
 RUN curl -O https://dlcdn.apache.org/spark/spark-$SPARK_VERSION/spark-$SPARK_VERSION-bin-hadoop3.tgz \
     && tar -xvzf spark-$SPARK_VERSION-bin-hadoop3.tgz \
     && rm -rf spark-$SPARK_VERSION-bin-hadoop3.tgz \
