@@ -108,6 +108,16 @@ services:
     volumes:
       - ./data:/data
 
+  data-uploader:
+    build: ./docker/data-uploader
+    container_name: data-uploader
+    depends_on:
+      minio:
+        condition: service_healthy
+    command: spark-submit data_uploader.py
+    volumes:
+      - ./docker/spark/spark-defaults.conf:/usr/local/spark/conf/spark-defaults.conf
+
 networks:
   default:
     name: simple-data-flow
