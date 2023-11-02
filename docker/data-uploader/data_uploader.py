@@ -10,5 +10,6 @@ def main() -> None:
         compression="snappy",
     )
 
+
 if __name__ == "__main__":
     main()
