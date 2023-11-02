@@ -16,8 +16,8 @@ format:
 	pdm run black .
 
 lint:
-	pdm run mypy src
-	pdm run ruff src --fix
+	pdm run mypy .
+	pdm run ruff . --fix
 
 ######################
 #   docker compose   #
