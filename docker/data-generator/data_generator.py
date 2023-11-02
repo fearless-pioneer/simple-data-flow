@@ -1,5 +1,6 @@
-import boto3
 import os
+
+import boto3
 
 MINIO_BUCKET = "data"
 MINIO_ENDPOINT = "http://minio:9000"
@@ -14,9 +15,9 @@ S3_CLIENT = boto3.client(
 )
 
 
-def main():
+def main() -> None:
     root_file_path = "/data"
-    file_name_list = ["2019-Oct.csv", "2019-Dec.csv"]
+    file_name_list = os.listdir(root_file_path)
 
     for file_name in file_name_list:
         local_csv_file_path = os.path.join(root_file_path, file_name)

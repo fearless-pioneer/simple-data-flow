@@ -16,8 +16,8 @@ format:
 	pdm run black .
 
 lint:
-	pdm run mypy src
-	pdm run ruff src --fix
+	pdm run mypy .
+	pdm run ruff . --fix
 
 ######################
 #   docker compose   #
@@ -29,4 +29,5 @@ spark-cluster-clean:
 	docker compose down -v
 	docker rmi \
 		simple-spark-flow-spark-master simple-spark-flow-spark-notebook \
-		simple-spark-flow-data-generator simple-spark-flow-spark-livy
+		simple-spark-flow-data-generator simple-spark-flow-spark-livy \
+		simple-spark-flow-data-uploader
